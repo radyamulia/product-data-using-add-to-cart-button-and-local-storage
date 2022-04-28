@@ -1,0 +1,29 @@
+* {
+    font-size: 16px;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px;
+}
+
+.table-product, .table-data {
+    width: 60em;
+    margin: auto;
+}
+
+td {
+    text-align: center;
+    padding: 6px;
+}
+
+.table-product tr td > img {
+    height: 100px;
+    width: 150px;
+}
+
+.table-product tr td > button {
+    cursor: pointer;
+}

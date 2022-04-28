@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/main.css">
+    <title>Product Data Input Using Local Storage</title>
+</head>
+<body onload="setAttrBtn()">
+    <h1 class="title">Product Data Input Using Local Storage</h1>
+    <table class="table-product" border="1">
+        <tr>
+            <td colspan="2">Product</td>
+            <td colspan="2">Price</td>
+        </tr>
+        <tr>
+            <td class="product">Nasi Goreng</td>
+            <td>
+                <img src="./assets/nasigoreng.jfif" alt="product nasi goreng">
+            </td>
+            <td>
+                <p>Rp. 25.000</p>
+            </td>
+            <td>
+                <button>Add to Cart</button>
+            </td>
+        </tr>
+        <tr>
+            <td class="product">Gado-Gado</td>
+            <td>
+                <img src="./assets/gadogado.jfif" alt="product gado gado">
+            </td>
+            <td>
+                <p>Rp. 20.000</p>
+            </td>
+            <td>
+                <button>Add to Cart</button>
+            </td>
+        </tr>
+        <tr>
+            <td class="product">Pecel Lele</td>
+            <td>
+                <img src="./assets/pecellele.jfif" alt="product pecel lele">
+            </td>
+            <td>
+                <p>Rp. 28.000</p>
+            </td>
+            <td>
+                <button>Add to Cart</button>
+            </td>
+        </tr>
+        <tr>
+            <td class="product">Mie Bakso</td>
+            <td>
+                <img src="./assets/miebakso.jfif" alt="product mie bakso">
+            </td>
+            <td>
+                <p>Rp. 30.000</p>
+            </td>
+            <td>
+                <button>Add to Cart</button>
+            </td>
+        </tr>
+    </table>
+    <br><br>
+    <!-- Data Stored in Local Storage-->
+    <h1 class="data">Product in the cart:</h1>
+    <table class="table-data" border="1">
+        <tr>
+            <td>Product</td>
+            <td>Quantity</td>
+            <td>Price * Qty</td>
+        </tr>
+        <tbody id="table-body">
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">TOTAL PRICE</td>
+                <td id="total-price"></td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+<script src="./script/main.js"></script>
+</html>
