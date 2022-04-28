@@ -1,37 +1,34 @@
+// Constant Data
 let data = [
     {
         name: "Nasi Goreng",
-        price: "25_000"
+        price: 25_000,
+        qty: 1
     },
     {
         name: "Gado Gado",
-        price: "20_000"
+        price: 20_000,
+        qty: 1
     },
     {
         name: "Pecel Lele",
-        price: "25_000"
+        price: 25_000,
+        qty: 1
     },
     {
         name: "Mie Bakso",
-        price: "25_000"
+        price: 25_000,
+        qty: 1
     }
 ]
-
-let dataInputtedStructure = {
-    name: "",
-    price: "",
-    qty: ""
-}
 
 /**
  * Set different onclick function for different button   
  */
 function setAttrBtn() {
-    const btn = document.getElementsByTagName('button')
-    const numberOfBtn = btn.length;
-
-    for (let i = 0; i < numberOfBtn; i++) {
-        btn[i].onclick = `addItem(${i})`
+    const btn = document.getElementsByClassName('addToCart-btn')
+    for (let i = 0; i < btn.length; i++) {
+        btn[i].onclick = function() { addItem(i) }
     }
 }
 
@@ -39,32 +36,73 @@ function setAttrBtn() {
  * @returns {object[]}
  */
 function getLSItem() {
-    return localStorage.getItem('prodInputted') || [];
+    const data = JSON.parse(localStorage.getItem("prodInputted"));
+    return data || [];
 } 
 
-function LSChecker(inputtedObj) {
+function LSChecker({ name, price, qty }) {
     const existingData = getLSItem();
-    existingData.forEach((dataExist) => {
-        if (inputtedObj == dataExist)        
-            return true
-    })
-    return false
+    const paramObj = {
+        name: name,
+        price: price,
+        qty: qty
+    }
+    if (existingData.length) {
+        for (let i = 0; i < existingData.length; i++) {
+            if(JSON.stringify(existingData[i].name) == JSON.stringify(paramObj.name)) {   
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+/**
+ * @returns {modified object[] without adding index}
+ */
+function LSModifier({ name, price, qty }) {
+    const existingData = getLSItem();
+    let modifiedObj = {
+        name: name,
+        price: price,
+        qty: qty
+    }
+    console.log(modifiedObj)
+    for (let i = 0; i < existingData.length; i++) {
+        // console.log(existingData[i].name)
+        if(JSON.stringify(existingData[i].name) == JSON.stringify(modifiedObj.name)) {    
+            modifiedObj = {
+                name: existingData[i].name,
+                price: existingData[i].price,
+                qty: existingData[i].qty
+            }
+            modifiedObj.price += (Math.floor(modifiedObj.price/modifiedObj.qty));
+            modifiedObj.qty++;
+            console.log("Modifying data..")
+            console.log(modifiedObj)
+            existingData[i] = modifiedObj
+        }
+    }
+    const stringifiedModifiedExistingData = JSON.stringify(existingData)
+    return localStorage.setItem("prodInputted", stringifiedModifiedExistingData);
 }
 
 function addItem(index) {
-    // const existingData = getLSItem();
-    const productDataObj = data[index];
-    if (LSChecker(productDataObj[index]) == false) {
-        const newItem = {
-            name: data.name,
-            price: data.price,
+    console.log("adding item to local storage..");
+    let productDataObj = data[index];
+    if (LSChecker(productDataObj) == false) {
+        console.log(productDataObj)
+        let newItem = {
+            name: productDataObj.name,
+            price: productDataObj.price,
             qty: 1
-        }
-        // newItem.qty = 1;
+        };
         let newArrayData = [ ...getLSItem(), { ...newItem }];
-        return localStorage.setItem(JSON.stringify('prodInputted', newArrayData))
+        const stringifiedArrayObj = JSON.stringify(newArrayData)
+        return localStorage.setItem("prodInputted", stringifiedArrayObj);
     }
-    return ;
+
+    LSModifier(productDataObj);
 }
 
 function dataToBeShown({ name, price, qty }) {
@@ -74,25 +112,45 @@ function dataToBeShown({ name, price, qty }) {
     const priceCol = document.createElement("td");
     
     nameCol.textContent = name;
-    qtyCol.texContent = qty;
-    priceCol.textContent = parseInt(price)
+    qtyCol.textContent = qty;
+    priceCol.textContent = `Rp. ${parseInt(price)}`
 
-    nameCol.appendChild(dataRow)
-    qtyCol.appendChild(dataRow)
-    priceCol.appendChild(dataRow)
+    dataRow.appendChild(nameCol)
+    dataRow.appendChild(qtyCol)
+    dataRow.appendChild(priceCol)
 
     return dataRow;
 }
 
 function showItem() {
-    const existingData = getLSItem();
-    const tableBody = document.getElementById('table-body')
+    let existingData = getLSItem();
+    let tableBody = document.getElementById('table-body')
     const totalPrice = document.getElementById('total-price')
     let total = 0;
 
-    existingData.forEach((prodData) =>{
-        dataToBeShown(prodData).appendChild(tableBody)
-        total += prodData.price;
-    })
-    totalPrice.textContent = total;
+    if (existingData.length) {
+        // existingData.forEach((dataExist) => {
+        //     tableBody.appendChild(dataToBeShown(dataExist))
+        //     total += parseInt(dataExist.price);
+        // })
+        for (let i = 0; i< existingData.length; i++) {
+            tableBody.appendChild(dataToBeShown(existingData[i]))
+            total += parseInt(existingData[i].price)
+        }
+    }
+    totalPrice.textContent = `Rp. ${total}`;
 }
+
+
+function clearCart() {
+    const cond = confirm("Are you sure want to clear the cart?")
+    if (cond)
+        localStorage.clear()
+}
+
+function onInit() {
+    setAttrBtn();
+    showItem();
+}
+
+onInit();

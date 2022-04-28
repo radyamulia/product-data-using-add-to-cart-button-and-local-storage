@@ -2,6 +2,7 @@
     font-size: 16px;
     box-sizing: border-box;
     font-family: sans-serif;
+    transition: all 200ms ease;
 }
 
 h1 {
@@ -26,4 +27,26 @@ td {
 
 .table-product tr td > button {
     cursor: pointer;
+}
+
+.btn-clear {
+    height: 30px;
+    width: 100px; 
+    border: none;
+    background-color: red;
+    color: white;
+    font-weight: 500;
+}
+
+.btn-clear:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.table-title {
+    margin: auto;
+    align-items: center;
+    display: grid;
+    grid-template-columns: auto 100px;
+    width: 60em;
 }

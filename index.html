@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./style/main.css">
     <title>Product Data Input Using Local Storage</title>
 </head>
-<body onload="setAttrBtn()">
+<body>
     <h1 class="title">Product Data Input Using Local Storage</h1>
     <table class="table-product" border="1">
         <tr>
@@ -23,7 +23,7 @@
                 <p>Rp. 25.000</p>
             </td>
             <td>
-                <button>Add to Cart</button>
+                <button class="addToCart-btn">Add to Cart</button>
             </td>
         </tr>
         <tr>
@@ -35,7 +35,7 @@
                 <p>Rp. 20.000</p>
             </td>
             <td>
-                <button>Add to Cart</button>
+                <button class="addToCart-btn">Add to Cart</button>
             </td>
         </tr>
         <tr>
@@ -47,7 +47,7 @@
                 <p>Rp. 28.000</p>
             </td>
             <td>
-                <button>Add to Cart</button>
+                <button class="addToCart-btn">Add to Cart</button>
             </td>
         </tr>
         <tr>
@@ -59,13 +59,16 @@
                 <p>Rp. 30.000</p>
             </td>
             <td>
-                <button>Add to Cart</button>
+                <button class="addToCart-btn">Add to Cart</button>
             </td>
         </tr>
     </table>
     <br><br>
     <!-- Data Stored in Local Storage-->
-    <h1 class="data">Product in the cart:</h1>
+    <div class="table-title">
+        <h1 class="data">Product in the cart:</h1>
+        <button class="btn-clear" onclick="clearCart()">Clear Cart</button>
+    </div>
     <table class="table-data" border="1">
         <tr>
             <td>Product</td>
